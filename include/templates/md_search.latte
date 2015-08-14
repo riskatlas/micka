@@ -1,0 +1,62 @@
+{* version 20140530 *}
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="UTF-8">
+	<title>MicKa</title>
+	<link rel="shortcut icon" href="{$themePath}/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="{$themePath}/micka.css">
+	<script language="javascript" src="scripts/micka.js"></script>
+</head>
+<body>
+<h1>{$label[125]}</h1>
+
+<div class="form-block">
+<form name="MdSearchForm" action="index.php" METHOD=POST>
+	<input name="ak" value="md_search" type="hidden">
+	<span class='md_label'>{$label[101]}:</span> 
+	<input class='inp' name="text" value="{$search['text']}" size="35">
+	<input type="submit" value="{$label[109]}">
+</form>
+</div>
+<h3>{$label[110]} ({$paginator['records']})</h3>
+
+{foreach $data as $value}
+	<div class="rec">
+		<div class="title">
+		<a class="t {if $value['standard'] == 'MS'}service{else}dataset{/if}" href="javascript:opener.find_parent1({ uuid:'{$value['uuid']}', title:'{$value['title']}', idCode:'{$value['ident_code']}', idNameSpace:'{$value['ident_codesp']}' }); window.close();">{$value['title']}</a>
+		</div>
+		<div class="abstract-pub">{$value['abstract']}</div>
+	</div>
+{/foreach}
+
+<center>
+<div>
+{ifset $paginator['pages']}
+{if $paginator['page_number'] > 1}
+	<a href="?ak=md_search&pg={$paginator['page_number']-1}">&lt;&lt;</a>
+{/if}
+{if $paginator['start_page'] > 1}
+	<a href="?ak=md_search&pg=1"> 1 </a> ...
+{/if}
+{if $paginator['end_page'] > 1}
+{foreach $paginator['view_pages'] as $key => $value}
+	{if $paginator['page_number'] == $value}
+		<font size="+1"><b>{$value}</b></font>
+	{else}
+		<a href="?ak=md_search&pg={$value}"> {$value} </a>
+	{/if}
+{/foreach}
+{/if}
+{if $paginator['end_page'] < $paginator['pages']}
+	... <a href="?ak=md_search&pg={$paginator['pages']}"> {$paginator['pages']}</a>
+{/if}
+{if $paginator['page_number'] < $paginator['pages']}
+	<a href="?ak=md_search&pg={$paginator['page_number']+1}">&gt;&gt;</a>
+{/if}
+<br>
+<br>
+</div>
+{/ifset}
+</body>
+</html>

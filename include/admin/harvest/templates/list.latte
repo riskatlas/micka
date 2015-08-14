@@ -1,0 +1,37 @@
+{* ver. 20140522 *}
+
+<h1>Harvested resources</h1>
+
+
+<table class="sprava">
+	<tr>
+		<th>Source</th>
+		<th>ID</th>
+		<th>Type</th>
+		<th>Interval</th>
+		<th>Filter</th>
+		<th>Updated</th>
+		<th><a href="?ak=admin&adm_ak=harvest&harvestak=edit"><img title="New" src="{$themePath}/img/add.png"/></a></th>
+	</tr>
+
+    {foreach $adminData['data']['list'] as $row}
+        
+	{var $type=$row['type']}
+	<tr class="{if $row['active'] == 1} harvested{/if}" >
+		<td><a href="?ak=admin&adm_ak=harvest&harvestak=edit&id={$row['id']}">{$row['id']}</a></td>
+		<td>{$row['source']}</td>
+		<td>{$adminData['data']['types'][$type]}</td>
+		<td>{$row['h_interval']/24} days</td>
+		<td>{$row['filter']}</td>
+		<td>{$row['updated']}</td>
+		<td><a onclick="return confirm('Delete ?');" href="?ak=admin&adm_ak=harvest&harvestak=delete&id={$row['id']}"><img title="Delete" src="{$themePath}/img/delete.png"/></a></td>
+	</tr>
+    {/foreach}
+</table>
+
+<br/><br/>
+
+<div>
+	<a href="../../reports/harvest.rss" style="background: url({$themePath}/img/rsss.gif) no-repeat; padding-left:20px; height:16px; display: inline-block" target="_blank">Harvest report</a>
+	<a href="../../reports/alive.html" style="background: url({$themePath}/img/pass.png) no-repeat; padding-left:20px; margin-left:30px; height:16px; display: inline-block">Services heartbeat</a>
+</div>

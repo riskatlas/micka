@@ -1,0 +1,60 @@
+{* ver. 20140527 *}
+
+
+<h1>Edit resource to harvest</h1>
+<form method="POST">
+	<input type="hidden" name="new" value="{$adminData['data']['new']}">
+	<fieldset>
+		<div>
+			<label for="id">Unique identifier</label>
+			{if $adminData['data']['new'] == 1}
+				<input name="id" class="T" value="{$adminData['data']['values']['id']}">
+			{else}
+				<input name="id" class="T" value="{$adminData['data']['values']['id']}" readonly="true" disabled="true">
+			{/if}	
+		</div>
+		
+		<div>
+			<label for="source">Source URL</label>
+			<input name="source" class="T" value="{$adminData['data']['values']['source']}">
+		</div>
+	
+		<div>
+			<label for="type">Type</label>
+            <select name="type">
+				{foreach $adminData['data']['types'] as $key => $value}
+					<option value="{$key}" {if $key == $adminData['data']['values']['type']} selected="true"{/if}>{$value}</option>
+				{/foreach}
+			</select>
+
+		</div>
+	
+		<div>
+			<label for="period">Harvest period (days)</label>
+			<input name="period" class="N" value="{$adminData['data']['values']['period']}">
+		</div>
+	
+		<div>
+			<label for="filter">Filter</label>
+			<input name="filter" class="T" value="{$adminData['data']['values']['filter']}">
+		</div>
+
+		<div>
+			<label for="period">Handler (email)</label>
+			<input name="handlers" class="T" value="{$adminData['data']['values']['handlers']}">
+		</div>
+
+		{if $adminData['data']['isadmin'] === TRUE}
+			<div>
+				<label for="active">Active</label>
+				<input name="active" type="checkbox" value="1" {if $adminData['data']['values']['active']==1}checked{/if}>
+			</div>
+		{/if}
+	
+	</fieldset>
+	<br>
+	<input type="hidden" name="harvestak" value="save">
+	<input name="ok" type="submit" value=" Save ">
+	<input name="cancel" type="submit" value="Cancel">
+
+</form>

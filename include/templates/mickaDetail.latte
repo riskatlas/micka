@@ -1,0 +1,82 @@
+{* version 20140211 *}
+
+<style>
+aaaa { margin-top:10px; margin-bottom:6px; padding-left:8px; border:#A0A0A0 solid 1px; }
+</style>
+
+<h1 title="{$label_resource_type}">
+    <div
+        {if $rec['mds']==0} class="dataset"
+        {elseif $rec['mds'] == 10} class="service"
+        {/if}
+        style="padding-left: 20px;">
+        {!$label_sd|escape|replace:'&amp;':'&'}
+        {*$label_sd*}
+    </div>
+</h1>
+{* <div class="hlevel">{$label_resource_type}</div> *}
+<h2>
+	<div class="detail icons">
+		<a href="?service=CSW&request=GetRecordById&version=2.0.2&language={$MICKA_LANG}&id={$rec['uuid']}&format=text/html" class="basic" title="Základní metadata"></a>
+		{if $MICKA_USER != 'guest'}
+			<a href="?ak=valid&uuid={$rec['uuid']}" class="valid{$rec['valid']}" title="{$label[186]}"></a>
+			<a href="?ak=edit&recno={$rec['recno']}" class="edit" title="{$label[21]}"></a>
+			<a href="?ak=copy&recno={$rec['recno']}" class="copy" title="Zkopírovat"></a>
+			<a href="javascript:md_delrec({$rec['recno']});" class="delete" title="{$label[182]}"></a>
+		{/if}	
+		<a href="?ak=xml&uuid={$rec['uuid']}" class="xml" target="_blank" title="XML"></a>
+	</div>
+	{$label[191]}
+</h2>
+
+<table class="report"><tr><td>
+{foreach $values as $value}
+	{if $value['level'] == 1}
+		{if !$iterator->first}</table>{/if}
+		<table class="report-right report-full" style="table-layout: fixed;"><tr><td class='subtitle-full' colspan="2" style="width: 100%" id="bl{$value['package_id']}" title="{$value['label_help']}">{$value['label']}</td></tr>
+    <colgroup>
+        <col style="width: 250px;" />
+        <col style="width: 402px;" />
+    </colgroup>	{else}
+		<tr>
+		{if $value['data'] == 1}
+			<th style="width:250px" width="250">
+				<span style="margin-left:{$value['level']}0px;" title="{$value['label_help']}">{$value['label']}:</span>
+			</th>
+			  <td class='rep_value' width="402">
+			  {if $value['id'] == 313 && $rec['mds'] == 0}
+			  	{if $uuidfc != ''}
+			    	<a href="?ak=detail&uuid={$uuidfc}" target="FCdet">{$value['hodnota']}</a>
+			    {else}
+			      	{!$value['hodnota']|replace:'&amp;':'&'}
+			    {/if}
+			  {elseif $value['id'] == 311 && $rec['mds'] == 0}
+			    {if $uuidfc != ''}
+			      <a href="?ak=detailfc&uuid={$uuidfc}&types={$value['hodnota']}" target="FCdet">{$value['hodnota']}</a>
+			    {else}
+			      {!$value['hodnota']|replace:'&amp;':'&'}
+			    {/if}
+			  {else}
+				{if $value['id'] == 11 && $rec['mds'] == 0}
+			  	  <b>{!$value['hodnota']|replace:'&amp;':'&'}</b>
+				{elseif $value['id'] == 5063 && $rec['mds'] == 10}
+			  	  <b>{!$value['hodnota']|replace:'&amp;':'&'}</b>
+			    {else}
+				  {!$value['hodnota']|replace:'&amp;':'&'}
+			    {/if}
+			  {/if}
+			  </td>
+		{else}
+			<th colspan="2">
+				<span style="margin-left:{$value['level']}0px;" title="{$value['label_help']}">{$value['label']}:</span>
+			</th>
+			  
+		{/if}	
+		</tr>
+	{/if}
+{/foreach}
+</table>
+</td>
+</tr></table>
+<a class="go-back" href="javascript:history.back();" title={$label[12]}></a>
+

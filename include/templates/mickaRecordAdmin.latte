@@ -1,0 +1,55 @@
+{* version 20130425 *}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Metadata - {$label[130]}</title>
+	<link rel="shortcut icon" href="{$themePath}/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="{$themePath}/micka.css">
+  <script type="text/javascript" src="scripts/micka.js"></script>
+</head>
+<body>
+<h2>{$label[130]}</h2>
+{* <h2>{$label[4]}</h2> *}
+
+{if $form_akce == 'new'}
+	<form action="micka_main.php" METHOD=POST>
+		<input type="hidden" name="ak" value="rec_admin">
+		<input type="hidden" name="form_akce" value="form">
+		<input type="hidden" name="recno" value="{$recno}">
+		{foreach $langs as $key => $value}
+			<label>
+				<input type="checkbox" name="rec_lang[]" value="{$key}" {foreach $select_langs as $lang}{if $key == $lang}checked="checked"{/if}{/foreach} />{$value}
+			</label>
+			<br />
+		{/foreach}
+		<br>
+		<center><input type="submit" value="{$label[6]}"></center>
+	</form>
+{elseif $form_akce == 'error'}
+	<center><div>{$label[14]}</div></center>
+	<br>
+	<br>
+	<center><input type=button onClick="window.close();" value="{$label[25]}"></center>
+{elseif $form_akce == 'warning'}
+	<form action="index.php" METHOD=POST>
+		<input type="hidden" name="ak" value="rec_admin">
+		<input type="hidden" name="form_akce" value="{$form_akce}">
+		<input type="hidden" name="recno" value="{$recno}">
+		<center>
+		<div>{$label[161]}</div>
+		<br>
+		<br>
+		<input type="submit" value="{$label[6]}">
+		</center>
+	</form>
+{elseif $form_akce == 'ok'}
+	<script type="text/javascript">opener.clickMenu('-19'); window.close();</script>
+{else}
+	system error
+{/if}
+
+
+</body>
+</html>

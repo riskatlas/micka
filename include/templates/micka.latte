@@ -1,0 +1,93 @@
+{* version 20140826 *}
+<!DOCTYPE html>
+<html class="x-border-box">
+<head>
+	<meta charset="UTF-8">
+	<title>MICKA - {$pageTitle}</title>
+	<link rel="shortcut icon" href="{$themePath}/favicon.ico">
+    <link rel="stylesheet" href="{$extjsPath}/resources/css/ext-all-neptune.css" type="text/css" />
+	<link rel="stylesheet" type="text/css" href="{$themePath}/micka.css">
+	<link rel="stylesheet" type="text/css" media="print" href="{$themePath}/micka_print.css">
+	<script language="javascript" src="scripts/micka.js"></script>
+    <script language="javascript" src="scripts/ajax.js"></script>
+    <script type="text/javascript" src="scripts/calendar.js"></script>
+    <link rel="stylesheet" type="text/css" href="scripts/calendar.css"/>
+{if $action == 'valid'}
+  <link rel="stylesheet" type="text/css" href="{$basePath}/validator/style/validator.css"/>
+{/if}
+</head>
+
+<body id="micka-body"{if $action == 'find' || $action == 'detail'} onload="micka.initMap();"{/if}>
+	<script type="text/javascript">
+		dialogWindow = null;
+		extents = new Array();
+		messages.del = {$label[182]};
+		messages.leave = {$label[183]};
+		messages.thes = {$label[185]};
+	</script>
+
+	<div id="headBox">
+		<a href="index.php" class="logo">
+			<h1>MICKA</h1>
+		</a>
+		{include 'langsBox.latte'}
+		<div id="loginBox">{include 'loginBox.latte'}</div>
+	</div>	
+	<div id="leftBox">
+		{include 'menuBox.latte'}
+		{if $action == 'find'}
+			{include 'mapBox.latte'}
+			<div style="margin: 10px; text-align:center">
+				<a href="csw/?request=GetRecords&query={urlencode($urlParams['query'])}&format=application/xml&MaxRecords={$urlParams['maxrecords']}&StartPosition={$urlParams['startposition']}&outputSchema=http://www.georss.org/georss" target="_blank"><img src="themes/default/img/rss-r.png" title="GeoRSS"/></a>
+				<a href="csw/?request=GetRecords&query={urlencode($urlParams['query'])}&format=application/xml&MaxRecords={$urlParams['maxrecords']}&StartPosition={$urlParams['startposition']}&outputSchema=http://www.w3.org/2005/Atom" target="_blank"><img src="themes/default/img/atom-r.png" title="ATOM"/></a>
+				<a href="csw/?request=GetRecords&query={urlencode($urlParams['query'])}&format=application/xml&MaxRecords={$urlParams['maxrecords']}&StartPosition={$urlParams['startposition']}&outputSchema=http://www.w3.org/ns/dcat#" target="_blank"><img src="themes/default/img/rdf-r.png" title="RDF"/></a>
+				<a href="csw/?request=GetRecords&query={urlencode($urlParams['query'])}&format=application/xml&MaxRecords={$urlParams['maxrecords']}&StartPosition={$urlParams['startposition']}&outputSchema=http://earth.google.com/kml/2.2" target="_blank"><img src="themes/default/img/kml-r.png" title="KML"/></a>
+			</div>
+		{elseif $action == 'detail'}
+			{include 'mapBox.latte'}
+		{/if}
+	</div>
+	<div id="micka-root">
+	<div id="naviBox">{include 'naviBox.latte'}</div>
+	{* <div id="usrBox"></div> *}
+	{* <div id="sortBox">{$sortBox}</div> *}
+	{* <div id="labelBox">{$labelBox}</div> *}
+	<div id="dataBox">
+        {* FLASH zprávy *}
+        {foreach $flashes as $flash}
+            <div class="flash {$flash['type']}">{$flash['message']}</div>
+        {/foreach}
+        
+		{if $action == 'about'}
+			{include 'mickaAbout.latte'}
+		{elseif $action == 'contact' || $action == 'cookbook' || $action == 'home'}
+			{include $incTemplatePath}
+		{elseif $action == 'search'}
+			{include 'mickaSearch.latte'}
+		{elseif $action == 'new'}
+			{include 'mickaNew.latte'}
+		{elseif $action == 'edit'}
+			{include 'mickaEdit.latte'}
+		{elseif $action == 'md_contacts'}
+			{include 'mickaContacts.latte'}
+		{elseif $action == 'admin'}
+			{if $adminData['template'] == 'default'}
+				{include 'mickaAdmin.latte'}
+			{else}
+				{include $adminData['template']}
+			{/if}
+		{elseif $action == 'detailall'}
+			{include 'mickaDetail.latte'}
+		{elseif $action == 'help'}
+			{if $MICKA_LANG == 'cze' || $MICKA_LANG == 'slo'}
+				{include 'mickaHelpCze.latte'}
+			{else}
+				{include 'mickaHelpEng.latte'}
+			{/if}
+		{else}
+			{!$dataBox}
+		{/if}
+	</div>
+  </div>
+</body>
+</html>

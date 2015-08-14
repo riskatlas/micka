@@ -1,0 +1,10 @@
+/* css file for printing */
+
+#headBox {display: none}
+#menuBox {display: none}
+#naviBox {display: none}
+#loginBox {display: none}
+#dataBox {width: 100%; margin-left: 0px;}
+
+div.print {display: block}
+div.display {display:none}

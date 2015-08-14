@@ -1,0 +1,105 @@
+{* version 20131105 *}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Metadata - {$label[135]}</title>
+	<link rel="shortcut icon" href="{$themePath}/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="{$themePath}/micka.css">
+  <script type="text/javascript" src="scripts/micka.js"></script>
+  <script type="text/javascript">
+		function md_delkont(id) {
+      		if(confirm('{$label[169]}?')) this.location=("?ak=md_contacts&action=delete&id="+id);
+		}
+  </script>
+</head>
+<body>
+<h2>{$label[135]}</h2>
+<br>
+{if $MICKA_USER != 'guest'}
+	<a href="?ak=md_contacts&action=new">
+		<img src="{$themePath}/img/user_add.png" title="New"> {$label[136]}
+	</a>
+	<br>
+{/if}
+<table class="sprava" width="100%">
+	<tr>
+		{if $mds != ''}
+		<th style="width:20px"></th>
+		{/if}
+		<th>{$label[149]}</th>
+		<th>{$label[137]}</th>
+		<th>{$label[138]}</th>
+		{if $MICKA_USER != 'guest'}
+			<th>&nbsp;</th>
+		{/if}
+	</tr>
+	{foreach $contacts['data'] as $contact}
+	<tr class="rowsel">
+		{if $mds != ''}
+		<td>
+			{if $mds == 'DC'}
+				<a href="javascript:opener.dc_kontakt1(
+					'http://mysite.org/person/{$contact['CONT_ID']}',
+					'{$contact['CONT_PERSON']}',
+					'{$contact['CONT_ORGANISATION']}',
+					'{$contact['CONT_FUNCTION']}',
+					'{$contact['CONT_PHONE']}',
+					'{$contact['CONT_FAX']}',
+					'{$contact['CONT_POINT']}',
+					'{$contact['CONT_CITY']}',
+					'{$contact['CONT_ADMINAREA']}',
+					'{$contact['CONT_POSTCODE']}',
+					'{$contact['CONT_COUNTRY']}',
+					'{$contact['CONT_EMAIL']}',
+					'{$contact['CONT_URL']}
+				'); window.close();">
+			{else}
+				<a href="javascript:opener.kontakt1(
+					'http://mysite.org/person/{$contact['CONT_ID']}',
+					'{$contact['CONT_PERSON']}',
+					'{$contact['CONT_ORGANISATION']}',
+					'{$contact['CONT_ORGAN_EN']}',
+					'{$contact['CONT_FUNCTION']}',
+					'{$contact['CONT_FUNCTION_EN']}',
+					'{$contact['CONT_PHONE']}',
+					'{$contact['CONT_FAX']}',
+					'{$contact['CONT_POINT']}',
+					'{$contact['CONT_CITY']}',
+					'{$contact['CONT_ADMINAREA']}',
+					'{$contact['CONT_POSTCODE']}',
+					'{$contact['CONT_COUNTRY']}',
+					'{$contact['CONT_EMAIL']}',
+					'{$contact['CONT_URL']}'
+				,4); window.close();">
+			{/if}
+			<img src="{$themePath}/img/tick.png" title="Contact to MicKa"></a>
+		</td>
+		{/if}
+		<td>{$contact['CONT_LABEL']}</td>
+		<td>{$contact['CONT_PERSON']}</td>
+		<td>{$contact['CONT_ORGANISATION']}</td>
+		{if $MICKA_USER != 'guest'}
+			<td style="width:60px">
+				{if $contact['right'] == 'w'}
+					<a href="?ak=md_contacts&action=edit&id={$contact['CONT_ID']}">
+						<img src="{$themePath}/img/user_edit.png" title="Edit">
+					</a>
+				{/if}
+				<a href="?ak=md_contacts&action=copy&id={$contact['CONT_ID']}">
+					<img src="{$themePath}/img/user_go.png" title="Copy">
+				</a>
+				{if $contact['right'] == 'w'}
+					<a href="javascript:md_delkont({$contact['CONT_ID']})">
+						<img src="{$themePath}/img/user_delete.png" title="Delete">
+					</a>
+				{/if}
+			</td>
+		{/if}
+	</tr>
+	{/foreach}
+</table>
+
+</body>
+</html>

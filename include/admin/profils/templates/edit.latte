@@ -1,0 +1,75 @@
+{* version 20140523 *}
+
+
+<div class='hlavicka'>Profil EDIT/NEW</div>
+
+<form action="index.php" METHOD=POST>
+	<input name="ak" type="hidden" value="admin">
+	<input name="adm_ak" type="hidden" value="profils">
+	<input name="profil_ak" type="hidden" value="setp">
+	<input name="mds" type="hidden" value="{$adminData['data']['profil_names']['MD_STANDARD']}">
+	<input name="profil_id" type="hidden" value="{$adminData['data']['profil_names']['PROFIL_ID']}">
+
+	<table>
+	<tr><td>Name</td><td><input name="profil_name" type="text" value="{$adminData['data']['profil_names']['PROFIL_NAME']}"></td></tr>
+	<tr><td>Visible</td><td>
+		<select name="is_vis" class="find">
+			{foreach $adminData['data']['select_true'] as $key => $value}
+				{if $key == $adminData['data']['profil_names']['IS_VIS']}
+				<option label="{$value}" value="{$key}" selected>{$value}</option>
+				{else}
+				<option label="{$value}" value="{$key}">{$value}</option>
+				{/if}
+			{/foreach}
+		</select>
+		</td></tr>
+	<tr><td>Packages</td><td>
+		<select name="is_packages" class="find">
+			{foreach $adminData['data']['select_true'] as $key => $value}
+				{if $key == $adminData['data']['profil_names']['IS_PACKAGES']}
+				<option label="{$value}" value="{$key}" selected>{$value}</option>
+				{else}
+				<option label="{$value}" value="{$key}">{$value}</option>
+				{/if}
+			{/foreach}
+		</select>
+		</td></tr>
+	<tr><td>Inspire</td><td>
+		<select name="is_inspire" class="find">
+			{foreach $adminData['data']['select_true'] as $key => $value}
+				{if $key == $adminData['data']['profil_names']['IS_INSPIRE']}
+				<option label="{$value}" value="{$key}" selected>{$value}</option>
+				{else}
+				<option label="{$value}" value="{$key}">{$value}</option>
+				{/if}
+			{/foreach}
+		</select>
+		</td></tr>
+	<tr><td>Micka LITE</td><td>
+		<select name="edit_lite_template" class="find">
+			{foreach $adminData['data']['lite_templates'] as $key => $value}
+				{if $key == $adminData['data']['profil_names']['EDIT_LITE_TEMPLATE']}
+				<option label="{$value}" value="{$key}" selected>{$value}</option>
+				{else}
+				<option label="{$value}" value="{$key}">{$value}</option>
+				{/if}
+			{/foreach}
+		</select>
+		</td></tr>
+	{if $adminData['data']['profil_names']['PROFIL_ID'] == -1}
+		<tr><td>Template</td><td>
+			<select name="copy" class="find">
+				{foreach $adminData['data']['copy_profils'] as $key => $value}
+					<option label="{$value}" value="{$key}">{$value}</option>
+				{/foreach}
+			</select>
+			</td></tr>
+	{/if}
+	</table>
+	<hr size=1>
+	<p>
+		<input type="submit" value="{$label[6]}">
+		<input type="reset" value="{$label[7]}">
+		<input type="button" onClick="window.location.href='?ak=admin&adm_ak=profils&mds={!$adminData['data']['mds']}';" value="{$label[12]}">
+	</p>
+</form>

@@ -1,0 +1,67 @@
+{* version 20140523 *}
+
+<script type="text/javascript">
+function smazat(userName) {
+	if(confirm('Delete '+userName+'?')) return true;
+	return false;
+}
+</script>
+
+<h1>Identity management</h1>
+
+{if $adminData['data']['action'] == ''}
+	{* výpis *}
+	<table class='sprava'>
+		<tr>
+			<th>User</th>
+			<th>Groups</th>
+			<th>Description</th>
+			<th></th>
+		</tr>
+	{foreach $adminData['data']['data'] as $row}
+		<tr class='rowsel icons'>
+			<td><a class='edit' style="padding-left: 20px;" href='?ak=admin&adm_ak=hsusers&hsuserak=edit&usr={$row[0]}'> {$row[0]}</a></td>
+			<td>{$row[1]}</td>
+			<td>{$row[3]}</td>
+			<td style="width: 20px;"><a href='?ak=admin&adm_ak=hsusers&hsuserak=delete&usr={$row[0]}' onclick="{ return smazat('{$row[0]}'); }"><img src='{$themePath}/img/trash.png' alt='smazat' title="smazat"></a></td>
+		</tr>
+	{/foreach}
+	</table>
+	<br>
+	<a href='?ak=admin&adm_ak=hsusers&hsuserak=edit'>new</a>
+{/if}
+
+{if $adminData['data']['action'] == 'error'}
+	{* chyba *}
+	<p>{$adminData['data']['data']}</p>
+	<br>
+	<a href='?ak=admin&adm_ak=hsusers'>back</a>
+{/if}
+
+{if $adminData['data']['action'] == 'edit'}
+	{* edit *}
+	<form method='post'>
+	<input name='ak' type='hidden' value='admin'>
+	<input name='adm_ak' type='hidden' value='hsusers'>
+	<input name='hsuserak' type='hidden' value=''>
+	<fieldset>
+		<!--<legend>Uživatel</legend>-->
+		<label>Name:</label><input name='usr' value='{$adminData['data']['data'][0]}'><br>
+		<label>Groups:</label><input name='groups' size='90' value='{$adminData['data']['data'][1]}'><br>
+		<label>Description:</label><input name='description' size='90' value='{$adminData['data']['data'][3]}'><br>
+		<label>Address:</label><input name='address' size='90' value='{$adminData['data']['data'][4]}'><br>
+		<label>E-mail:</label><input name='email' size='40' value='{$adminData['data']['data'][5]}'><br>
+		<label>Password:</label><input name='pwd1' type='password' value=''><br>
+		<label>Repeat password:</label><input name='pwd2' type='password' value=''><br>
+	</fieldset>
+	<br />
+	<center>
+		<input type='submit' value='Save' onClick="document.forms[0].hsuserak.value='save'">
+		<input type='submit' value='Storno'>
+	</center>
+	</form>
+{/if}
+
+</body>
+</html>
+

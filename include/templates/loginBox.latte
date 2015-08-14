@@ -1,0 +1,16 @@
+{* ver. 20130221 *}
+{if $MICKA_USER == 'guest' && $FORM_SIGN === TRUE}
+	<a href="javascript:showLogin()">{$label[122]}</a><br/>
+	<form name='prihl' method="post" action="" id="loginForm">
+		<label class="x-form-item-label">{$label[123]}:</label> <input name='user' class="x-form-field x-form-text" value="">
+		<label class="x-form-item-label">{$label[124]}:</label> <input name='pwd' type="password" class="x-form-field x-form-text" value=""> &nbsp;
+		<input type="submit" value="OK" class="x-btn-center">
+	</form>
+	
+{else}
+	<span class="user-label">{$label[4]}:</span> <b>{$MICKA_USER}</b>
+	{if $FORM_SIGN === TRUE}
+		<a href='index.php?user=guest'>{$label[170]}</a>
+	{/if}
+{/if}
+

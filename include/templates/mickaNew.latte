@@ -1,0 +1,144 @@
+{* version 20130425 *}
+
+<script type="text/javascript" n:syntax="off">
+
+var chprof = function(o){
+  var jaz=document.getElementById("jazyky");
+  if(o.value!="") jaz.style.display="none";
+  else jaz.style.display="block";
+}
+
+var chStandard = function(o){
+  var impDiv = document.getElementById("importArea");
+  if(o.value==99) impDiv.style.display="";
+  else{
+    impDiv.style.display="none";
+    document.newRecord.soubor.value='';
+    document.newRecord.url.value='';
+  }
+}
+</script>
+
+
+<h1>{$label[3]}</h1>
+
+<form name="newRecord" action="?ak=insert" METHOD=POST enctype="multipart/form-data">
+
+<h3>{$label[111]}</h3>
+<div style="width:300px;" class="form-block">
+	{foreach $mdStandard as $key => $value}
+		<label><input type="radio" name="standard" value="{$key}" {if $key == 0} checked="checked"{/if} onclick="chStandard(this)" />{$value}</label><br />
+	{/foreach}
+</div>
+
+<div id="importArea" style="display:none">
+<h3>Import</h3>
+
+<div class="form-block" style="width:650px;">
+<div class='md_label'>{$label[155]}</div>
+<table><tr><td>
+<select name="fileType" onChange="importSelect(this);">
+  <option value="ISO19139">ISO 19139</option>
+  <option value="ESRIdata">ESRI ISO metadata</option>
+  <option value="ISVS">ISVS / MIDAS</option>
+  <option value="FC">FC</option>
+</select>
+<input type="file" name="soubor" size="70">
+</td></tr>
+
+<tr style='display:'>
+<td id="fill-rec">
+  <input value="{$label[175]}" onclick="find_record(this,'parent');" class="b" type="button" style="width:180px">
+<input value="X" onclick="document.newRecord.md_rec.value=''; document.getElementById('fill-rec-txt').innerHTML='';" type="button" style="width:15px">
+  <input name="md_rec" value="" type="text" class="inp" style='display:none;'>
+  <span  id="fill-rec-txt"  style='color:red'></span>
+</td></tr>
+
+<tr style='display:none' id='input_hide'>
+<td id="fill-fc">
+<input value="{$label[164]}" onclick="find_fc(this,'parent');" class="b" type="button" style="width:180px">
+<input value="X" onclick="document.newRecord.fc.value=''; document.getElementById('fill-fc-txt').innerHTML='';" type="button" style="width:15px">
+<input name="fc" value="" type="text" class="inp" style='display:none;'>
+<span id="fill-fc-txt" style='color:red'></span>
+
+</td></tr>
+</table>
+<br>
+<div>
+<div class='md_label'>{$label[162]}</div>
+<select name="serviceType">
+  <option value="WMS">WMS</option>
+  <option value="WFS">WFS</option>
+  <option value="CSW">CSW</option>
+  <option value="SOS">SOS</option>
+</select>
+<input type="input" name="url" size="105" class="inp">
+</div>
+<br>
+
+<span class='md_label'>{$label[172]}</span>
+
+<input type="radio" name="updateType" value="all" checked="true"> {$label[173]}
+<input type="radio" name="updateType" value="skip" checked="true"> {$label[174]}
+{* <input type="radio" name="updateType" value="sel"> #Aktualizovat pouze importované položky. *}
+
+</div>
+</div>
+
+
+<h3>{$label[171]}</h3>
+<div class="form-block" style="width:300px;">
+	<table width="100%">
+
+	<tr><td class='md_label'>{$label[151]}:</td>
+        <td>
+			<select name="group_e" class="find">
+				{foreach $usrGroups as $key => $value}
+					{if $key == $edit_group}
+					<option label="{$value}" value="{$key}" selected>{$value}</option>
+					{else}
+					<option label="{$value}" value="{$key}">{$value}</option>
+					{/if}
+				{/foreach}
+			</select>
+		</td>
+	</tr>
+
+	<tr><td class='md_label'>{$label[154]}:</td>
+        <td>
+			<select name="group_v" class="find">
+				{foreach $usrGroups as $key => $value}
+					{if $key == $view_group}
+					<option label="{$value}" value="{$key}" selected>{$value}</option>
+					{else}
+					<option label="{$value}" value="{$key}">{$value}</option>
+					{/if}
+				{/foreach}
+			</select>
+        </td>
+	</tr>
+	</table>
+</div>
+
+<h3>{$label[130]}</h3>
+<div class="form-block" style="width:300px;">
+	<table width="100%">
+	<tr><td><div class='md_label'>{$label[176]}</div></td><td class='md_label'>{$label[177]}</td></tr>
+	<tr>
+	<td>
+	{foreach $mdLangs as $key => $value}
+		<label><input type="radio" name="lang_main" value="{$key}" {if $key == $MICKA_LANG} checked="checked"{/if} onclick="chStandard(this)" />{$value}</label><br />
+	{/foreach}
+	</td>
+	<td>
+	{foreach $mdLangs as $key => $value}
+		<label><input type="checkbox" name="languages[]" value="{$key}" {if $key == $MICKA_LANG} checked="checked"{/if} onclick="chStandard(this)" />{$value}</label><br />
+	{/foreach}
+	</td>
+	</tr></table>
+</div>
+<br>
+<p align="center">
+<input type="submit" value="{$label[8]}" style="font-size:20px; color:#D00000">
+</p>
+</form>

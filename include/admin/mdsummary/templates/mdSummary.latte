@@ -1,0 +1,53 @@
+{* version 20140818 *}
+
+<h1>Summary metadata records</h1>
+{foreach $adminData['data']['found']['records'] as $row}
+    {first}
+        <table class="sprava">
+            <tr>
+                <th>RECNO</th>
+                <th>UUID</th>
+                <th>STANDARD</th>
+                <th>DATA TYPE</th>
+                <th>TITLE</th>
+                <th>CREATE USER</th>
+                <th>EDIT GROUP</th>
+                <th>VIEW GROUP</th>
+                <th>CREATE DATE</th>
+                <th>LAST UPDATE DATE</th>
+            </tr>
+    {/first}
+        <tr>
+            <td>{$row['RECNO']}</td>
+            <td>
+                <a target="_blank" href="?service=CSW&request=GetRecordById&version=2.0.2&id={$row['UUID']}&format=text/html">
+                    {$row['UUID']}
+                </a>
+            </td>
+            <td>
+                {if $row['MD_STANDARD'] == 0}MD
+                {elseif $row['MD_STANDARD'] == 1}DC
+                {elseif $row['MD_STANDARD'] == 10}MS
+                {elseif $row['MD_STANDARD'] == 2}FC
+                {else}{$row['MD_STANDARD']}
+                {/if}
+            </td>
+            <td>
+                {if $row['DATA_TYPE'] == -1}semifinished
+                {elseif $row['DATA_TYPE'] == 0}private
+                {elseif $row['DATA_TYPE'] == 1}public
+                {elseif $row['DATA_TYPE'] == 2}portal
+                {else}{$row['DATA_TYPE']}
+                {/if}
+            
+            </td>
+            <td>{$row['TITLE']}</td>
+            <td>{$row['CREATE_USER']}</td>
+            <td>{$row['EDIT_GROUP']}</td>
+            <td>{$row['VIEW_GROUP']}</td>
+            <td>{$row['CREATE_DATE']|date:'j. n. Y'}</td>
+            <td>{$row['LAST_UPDATE_DATE']|date:'j. n. Y'}</td>
+        </tr>
+    {last}</table>{/last}
+{/foreach}
+

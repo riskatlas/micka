@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
+    xmlns:geo="http://a9.com/-/opensearch/extensions/geo/1.0/">
+    <ShortName>Micka</ShortName>
+    <Description>Fulltext search in Envirogrids Catalogue</Description>
+    <Url template="[path]opensearch.php?format=rdf&amp;q={searchTerms?}&amp;id={geo:uid?}&amp;bbox={geo:bbox?}&amp;start={startIndex?}&amp;lang={language?}" type="application/rdf+xml"/>
+    <Url template="[path]opensearch.php?format=rss&amp;q={searchTerms?}&amp;id={geo:uid?}&amp;bbox={geo:bbox?}&amp;start={startIndex?}&amp;lang={language?}" type="application/rss+xml"/>
+    <Url template="[path]opensearch.php?format=kml&amp;q={searchTerms?}&amp;id={geo:uid?}&amp;bbox={geo:bbox?}&amp;start={startIndex?}&amp;lang={language?}" type="application/vnd.google-earth.kml+xml"/>
+    <Url template="[path]opensearch.php?q={searchTerms}" type="text/html"/>
+    <Contact>admin@ccss.cz (Admin CCSS)</Contact>
+    <Tags>metadata</Tags>
+    <Image type="image/gif" width="16" height="16">[path]../img/favicon.gif</Image>
+    <Image type="image/vnd.microsoft.icon" width="16" height="16">[path]../favicon.ico</Image>
+    <Developer>Help Service Remote Sensing, s r.o</Developer>
+    <Language>cs</Language>
+    <OutputEncoding>UTF-8</OutputEncoding>
+    <InputEncoding>UTF-8</InputEncoding>
+</OpenSearchDescription>

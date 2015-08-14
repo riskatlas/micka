@@ -1,0 +1,27 @@
+{* version 20140523 *}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+	<meta charset="UTF-8">
+  <title>Metadata - {$label[135]}</title>
+	<link rel="stylesheet" type="text/css" href="{$themePath}/micka.css">
+	<link rel="shortcut icon" href="{$themePath}/favicon.ico">
+	<script language="javascript" src="scripts/micka.js"></script>
+</head>
+<body>
+	<h2>Profil {$profil_names}</h2>
+{foreach $tree_view as $treeview}
+	<span style="margin-left: {$treeview['md_level']}0px;">
+		{$treeview['el_name']}
+		{if $MICKA_USER == 'hsrs'}
+			<font color="blue">
+			(MD_ID: {$treeview['md_id']},
+			EL_ID: {$treeview['el_id']})
+			</font>
+		{/if}
+	</span>
+	<br>
+{/foreach}
+</body>
+</html>

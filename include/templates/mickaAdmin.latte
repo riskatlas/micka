@@ -1,0 +1,7 @@
+{* version 20121214 *}
+
+<h1>{$label[18]}</h1>
+
+{foreach $adminData['data'] as $value}
+	<div><a href="?ak=admin&adm_ak={$value['action']}">{$value['label']}</a></div>
+{/foreach}

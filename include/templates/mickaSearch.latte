@@ -1,0 +1,47 @@
+{* version 20130324 *}
+<link rel="stylesheet" href="{$openLayersPath}/theme/default/style.css" type="text/css">
+<script src="thesaurus/HS.js"></script>
+<script src="{$extjsPath}/ext-all.js"></script>
+<script src="{$openLayersPath}/OpenLayers.light.js"></script>
+<script type="text/javascript" src="{$extjsPath}/locale/ext-lang-cs.js"></script>
+<script src="thesaurus/translations.js"></script>
+<script src="thesaurus/thesaur.js"></script>
+{if $MICKA_LANG != "eng"}<script src="scripts/locale/labels-{$MICKA_LANG}.js"></script>{/if}
+<script src="scripts/extForm.js"></script>
+<script type="text/javascript">
+	var hs_initext={$hs_initext};
+	lang={$MICKA_LANG};
+	micka_user={$MICKA_USER};
+	HS.setLang(lang);
+	var tout = '';
+	function getFindBbox(bbox){
+	  var pom=bbox.replace(/,/, " ").split(" ");
+	  for(var i=0;i<pom.length;i++)pom[i] = Math.round(pom[i]*MD_EXTENT_PRECISION)/MD_EXTENT_PRECISION;
+	  with(document.forms[0]){
+	    xmin.value=pom[0];
+	    ymin.value=pom[1];
+	    xmax.value=pom[2];
+	    ymax.value=pom[3];
+	  }
+	}
+	function gaz(){
+	  window.open('md_gazcli.php?simple=1', 'gc', 'toolbar=no,location=no,directories=no,status=no,menubar=no,width=300,height=500,resizable=yes,scrollbars=yes');
+	}
+	function myRecords(){
+		document.MyForm.action="?ak=find&mode=myrecords";
+		document.MyForm.submit();
+	}
+	function ukazmapu(okno, url, win){
+	 w = window.open(url, okno, "toolbar=no,location=no,directories=no,status=yes,menubar=no,scrollbars=no,resizable=yes,copyhistory=no,"+win);
+	}
+	
+	Ext.scopeResetCSS = true;
+</script>
+
+
+<div id="mtitle"></div>
+
+<div id="formDiv">
+<h1>{$label[125]}</h1>
+</div>
+

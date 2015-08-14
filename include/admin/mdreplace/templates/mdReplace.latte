@@ -1,0 +1,148 @@
+{* version 20140811 *}
+{define #tableFound}
+    {foreach $records as $row}
+        {first}
+            <table class="sprava">
+                <tr>
+                    <th>TITLE</th>
+                </tr>
+        {/first}
+            <tr>
+                <td>
+                    {if $row['MD_STANDARD'] == 0}<img src="{$themePath}/img/dataset.png" title="ISO 19115 metadata">
+                    {elseif $row['MD_STANDARD'] == 10}<img src="{$themePath}/img/service.png" title="ISO 19119 metadata">
+                    {elseif $row['MD_STANDARD'] == 2}<img src="{$themePath}/img/fc.png" title="Feature Catalog">
+                    {elseif $row['MD_STANDARD'] == 1}<img src="{$themePath}/img/dc.gif"  title="Dublin Core metadata">
+                    {/if}
+                    <a target="_blank" href="?service=CSW&request=GetRecordById&version=2.0.2&id={$row['UUID']}&format=text/html">{$row['TITLE']}</a>
+                </td>
+            </tr>
+            {last}</table>{/last}
+    {/foreach}
+{/define}
+
+<script type="text/javascript" n:syntax="off">
+    var changeReplaceEl = function(o){
+      var pathDiv = document.getElementById("elementPath");
+      if(o.value === 'optional') {
+          pathDiv.style.display = "";
+      } else {
+        pathDiv.style.display = "none";
+      }
+    }
+</script>
+
+<h1>Bulk edits</h1>
+
+{if $adminData['data']['action'] == 'form'}
+<form action="index.php" METHOD=POST>
+	<input name="ak" type="hidden" value="admin">
+	<input name="adm_ak" type="hidden" value="mdreplace">
+	<input name="mdreplace_ak" type="hidden" value="search">
+	<fieldset>
+		<div>
+    		<label for="replace_el">Element:</label>
+        	<select name="replace_el" class="find" onChange="changeReplaceEl(this);">
+                        <option label="ANY" value="any">ANY</option>
+                        <option label="E-mail (everywhere)" value="email">E-mail (everywhere)</option>
+                        <option label="Individual Name (metadata)" value="name_md">Individual Name (metadata)</option>
+                        <option label="Individual Name (data)" value="name_data">Individual Name (data)</option>
+                        <option label="XPath" value="optional">XPath</option>
+        	</select>
+        </div>
+       	<div id="elementPath" style="display:none">
+           	<label for="path_el">XPath:</label>
+           	<input name="path_el" type="text" value="" size="58">
+        </div>
+		<div>
+	        <label for="value_find">Value:</label>
+            <input name="value_find" type="text" value="" size="50">
+		</div>
+		<div>
+        	<input type="submit" value="Search">
+        </div>	
+    </fieldset>
+</form>
+{/if}
+
+{if $adminData['data']['action'] == 'find'}
+
+	<div>
+		<label>Element:</label>
+        {if $adminData['data']['form']['replace_el'] == 'optional'}
+            {$adminData['data']['form']['path_el']}
+        {else}
+            {$adminData['data']['form']['replace_el']}
+        {/if}
+	</div>	 
+	<div>
+		<label>Value:</label> {$adminData['data']['form']['value_find']} <br />
+	</div>	 
+	<div>
+		<label>Found:</label> {count($adminData['data']['form']['found']['records'])}<br />
+	</div>	 
+ 	<br/>
+    {include #tableFound, records => $adminData['data']['form']['found']['records']}
+    {if count($adminData['data']['form']['found']['records']) > 0}
+        <br />
+        <form action="index.php" METHOD=POST>
+            <input name="ak" type="hidden" value="admin">
+            <input name="adm_ak" type="hidden" value="mdreplace">
+            <input name="mdreplace_ak" type="hidden" value="replace">
+            <input name="replace_el" type="hidden" value="{$adminData['data']['form']['replace_el']}">
+            <input name="path_el" type="hidden" value="{$adminData['data']['form']['path_el']}">
+            <input name="value_find" type="hidden" value="{$adminData['data']['form']['value_find']}">
+            <fieldset>
+            	<div>
+                	<label>Method:</label>
+                	<select name="replace_all" class="find">
+                    	<option label="whole element" value="yes">whole element</option>
+                    	<option label="substring" value="no">substring</option>
+                	</select>
+                </div>
+                <div>	
+                	<label>New value:</label>
+                	<input name="value_replace" type="text" value="" size="50">
+                </div>
+                <div>	
+                	<input type="submit" value="Replace">
+                </div>	
+            </fieldset>
+        </form>
+    {/if}
+	<br />
+	<a href="?ak=admin&adm_ak=mdreplace">New bulk edits</a>
+{/if}
+
+{if $adminData['data']['action'] == 'afterReplace'}
+	<div>
+		<label>Element:</label>
+        {if $adminData['data']['form']['replace_el'] == 'optional'}
+            {$adminData['data']['form']['path_el']}
+        {else}
+            {$adminData['data']['form']['replace_el']}
+        {/if}
+	</div>	 
+	<div>
+		<label>Value:</label> {$adminData['data']['form']['value_find']} 
+	</div>	 
+	<div>
+		<label>Replaced:</label> {$adminData['data']['form']['value_replace']} 
+	</div>	 
+	<div>
+		<label>Replaced:</label> {count($adminData['data']['form']['found']['records'])}
+	</div>	 
+	<div>
+		<label>Affected:</label> {$adminData['data']['form']['found']['affectedRecords']}
+	</div>	 
+	<br />
+    {include #tableFound, records => $adminData['data']['form']['found']['records']}
+	<br />
+	<a href="?ak=admin&adm_ak=mdreplace">New bulk edits</a>
+{/if}
+
+{if $adminData['data']['action'] == 'error'}
+	{$adminData['data']['form']['error']} <br />
+	<br />
+	<a href="?ak=admin&adm_ak=mdreplace">New bulk edits</a>
+{/if}

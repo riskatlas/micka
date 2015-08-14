@@ -1,0 +1,17 @@
+{* version 20111122 *}
+{* <div style='position:absolute; top:7px; left:320px; width:250px;'> *}
+<div id="langsBox">
+{foreach $mickaLangsArr as $lang}
+	{if $MICKA_LANG == $lang}
+		<img src='{$themePath}/img/flags/{$lang}.png' alt='{$lang}' title='{$lang}'>
+	{else}
+  		<a href='index.php?language={$lang}' class="flag">
+			<img src='{$themePath}/img/flags/{$lang}.png' alt='{$lang}' title='{$lang}'>
+		</a>
+	{/if}
+{/foreach}
+<a href="csw/?service=CSW&request=rss&days=7&language={$MICKA_LANG}" target="_blank">
+	<img src='{$themePath}/img/rss.png' alt='GeoRSS' title="GeoRSS" style="margin-left:5px;">
+</a>
+
+</div>

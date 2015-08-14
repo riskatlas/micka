@@ -1,0 +1,48 @@
+{* version 20121116 *}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>MicKa</title>
+	<link rel="shortcut icon" href="{$themePath}/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="{$themePath}/micka.css">
+	<script language="javascript" src="scripts/micka.js"></script>
+{ifset $fc['uuid']}
+	<script type="text/javascript">
+		var uuid = '{!$fc['uuid']}';
+		var langs = '{!$fc['langs']}';
+		var titles = '{!$fc['titles']}';
+	  function features() {
+		  var s="";
+			if(!document.fc.feature.length) fList = [document.fc.feature];
+			else fList = document.fc.feature;
+			for(var i=fList.length-1; i>=0; i--) if(fList[i].checked) s += ","+fList[i].value;
+	      s=s.substr(1);
+		    opener.fc1(uuid, langs, titles, s);
+			return false;
+		}
+	</script>
+{/ifset}
+</head>
+<body>
+	<div class="hlavicka">{$label[164]}</div>
+	<br>
+	{if count($fc) > 0}
+		{ifset $fc['uuid']}
+			<form name='fc' onsubmit="javascript:return features();">
+			{foreach $fc['hodnoty'] as $row}
+				<input type='checkbox' name='feature' value='{$row['kod']}'>{$row['nazev']}<br>
+			{/foreach}
+			<p align='center'><input type='submit' value='Vložit vybrané >>'></p>
+			</form>
+		{else}
+			{foreach $fc as $row}
+				<a href="?ak=md_fc&recno={$row['recno']}">{$row['title']}</a><br>
+			{/foreach}
+		{/ifset}
+	{else}
+		{$label[116]}
+	{/if}
+</body>
+</html>

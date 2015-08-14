@@ -1,0 +1,127 @@
+{* version 20130117 *}
+
+<div id="menuBox">
+		{* Vyhledávání *}
+		{if $action == 'search'}
+			<div class="md_menuitem">
+				<div>{$label[1]}</div>
+			</div>
+		{elseif $action == 'find' || $action == 'detail' || $action == 'detailall' ||  $action == 'valid'}
+			{foreach $navigation as $row}
+				<div class="md_menuitem">
+					{if $iterator->first}
+						<a href="?ak=search">{$row['label']}</a>
+					{else}
+						{if $row['url'] != ''}
+							<a style="margin-left:8px;" href="{$row['url']}">{$row['label']}</a>
+						{else}
+							<div style="margin-left:8px;">{$row['label']}</div>
+						{/if}
+					{/if}
+				</div>
+			{/foreach}
+		{else}
+			<div class="md_menuitem">
+				<a href="?ak=search">{$label[1]}</a>
+			</div>
+		{/if}
+		
+		{* Nový záznam *}
+		{if $insertRight == 1}
+			<div class="md_menuitem">
+				{if $action == 'new'}
+					<div>{$label[3]}</div>
+				{else}
+					<a href="?ak=new">{$label[3]}</a>
+				{/if}
+			</div>
+		{/if}
+			
+		{* Editace *}
+		{if $action == 'edit'}
+			<div class="md_menuitem">
+				<div>{$label[21]}</div>
+			</div>
+			<div class="md_menublock">
+				{if $selectProfil > -1}
+					<h3>{$label[117]}:</h3>
+					<select name="profil" onchange="selProfil(this);">
+						{foreach $profils as $kod => $popis}
+							<option value="{$kod}" {if $kod == $selectProfil} selected="true"{/if}>{$popis}</option>
+						{/foreach}
+					</select>
+					{foreach $packages as $package}
+						{if $iterator->first}<h3>{$label[9]}</h3>{/if}
+						{if $package['PACKAGE_ID'] == $selectPackage}<div>{$package['LABEL_TEXT']}</div>
+						{else}
+							<a class="package" href="javascript:void();" onclick="clickMenu('{$package['PACKAGE_ID']}');">
+								{$package['LABEL_TEXT']}
+							</a><br/>
+						{/if}
+					{/foreach}
+				{/if}
+				{* if VALIDATOR == 1}
+					<div class="md_menuitem"><a href="javascript:void();" onclick="clickMenu('-21');">{$label[186]}</a></div>
+				{/if *}
+				<div class="md_menuitem"><a href="javascript:void();" onclick="clickMenu('-2');">{$label[19]}</a></div>
+				<div class="md_menuitem"><a href="javascript:void();" onclick="clickMenu('-1');">{$label[112]}</a></div>
+				<div class="md_menuitem"><a href="javascript:void();" onclick="clickMenu('cancel');">{$label[128]}</a></div>
+			</div>
+		{/if}
+		
+		{* Administrace *}
+		{if $admin == 1}
+			{if $action == 'admin'}
+				{foreach $navigation as $row}
+					<div class="md_menuitem">
+						{if $iterator->first && $iterator->last}
+							<div>{$row['label']}</div>
+						{elseif $iterator->first}
+							<a href="?ak=admin">{$row['label']}</a>
+						{else}
+							{if $row['url'] != ''}
+								<a style="margin-left:8px;" href="{$row['url']}">{$row['label']}</a>
+							{else}
+								<div style="margin-left:8px;">{$row['label']}</div>
+							{/if}
+						{/if}
+					</div>
+				{/foreach}
+			{else}
+				<div class="md_menuitem">
+					<a href="?ak=admin">{$label[18]}</a>
+				</div>
+			{/if}
+		{/if}
+		
+		{* Nápověda *}
+		<div class="md_menuitem">
+			{if $action == 'help'}
+				<div>{$label[15]}</div>
+			{else}
+				<a href="?ak=help">{$label[15]}</a>
+			{/if}
+		</div>
+		
+		{* Kontakt 
+		<div class="md_menuitem">
+			{if $action == 'contact'}
+				<div>{$label[195]}</div>
+			{else}
+				<a href="?ak=contact">{$label[195]}</a>
+			{/if}
+		</div> *}
+		
+		{* O aplikaci *}
+		<div class="md_menuitem">
+			{if $action == 'about'}
+				<div>{$label[28]}</div>
+			{else}
+				<a href="?ak=about">{$label[28]}</a>
+			{/if}
+		</div>
+</div>
+
+
+
+

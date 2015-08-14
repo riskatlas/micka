@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<capabilities xmlns:ows="http://www.opengis.net/ows" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<ows:ServiceIdentification>
+		<ows:Title>Envirogrids metadata catalogue</ows:Title>
+		<ows:Abstract>Metadata catalogue of Envirogrids project.</ows:Abstract>
+		<ows:Keywords>
+			<ows:Keyword>CSW</ows:Keyword>
+			<ows:Keyword>EnviroGRIDS</ows:Keyword>
+			<ows:Keyword>INSPIRE</ows:Keyword>
+			<ows:Keyword>geospatial</ows:Keyword>
+			<ows:Keyword>catalogue</ows:Keyword>
+		</ows:Keywords>
+		<ows:ServiceType>CSW</ows:ServiceType>
+		<ows:ServiceTypeVersion>2.0.2</ows:ServiceTypeVersion>
+		<ows:Fees>NONE</ows:Fees>
+		<ows:AccessConstraints>Transactions for authorised users only.</ows:AccessConstraints>
+	</ows:ServiceIdentification>
+	<ows:ServiceProvider>
+		<ows:ProviderName>Envirogrids</ows:ProviderName>
+		<ows:ProviderSite xlink:href="http://www.envirogrids.cz"/>
+		<ows:ServiceContact>
+			<ows:IndividualName>Premysl Vohnout</ows:IndividualName>
+			<ows:PositionName>Portal administrator</ows:PositionName>
+			<ows:ContactInfo>
+				<ows:Address>
+					<ows:DeliveryPoint>Radlicka 28</ows:DeliveryPoint>
+					<ows:City>Praha</ows:City>
+					<ows:AdministrativeArea></ows:AdministrativeArea>
+					<ows:PostalCode>150 00</ows:PostalCode>
+					<ows:Country>Czech repubic</ows:Country>
+					<ows:ElectronicMailAddress>vohnout@ccss.cz</ows:ElectronicMailAddress>
+				</ows:Address>
+				<ows:OnlineResource xlink:href="http://www.ccss.cz"/>
+			</ows:ContactInfo>
+			<ows:Role>pointOfContact</ows:Role>
+		</ows:ServiceContact>
+	</ows:ServiceProvider>
+</capabilities>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Kody EU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="/wwwlibs/bootstrap-3.0.0/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    	a.list-group-item {padding: 5px 10px; display: block}
+    	a.list-group-item:hover {background: #FFFCE4}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-default" role="navigation">
+         <div class="container-fluid">
+               
+         </div>
+    </div>
+    <div class="container theme-showcase">
+        <div class="row">
+        
+            <div class="col-sm-6">
+                <div class="panel panel-info">
+                  <div class="panel-heading">
+                        <div class="btn-group">
+                          <select class="form-control" id="sel"></select>
+                        </div>
+                        <span id="label"></span>
+                  </div>
+                  <div class="list-group" id="codelist"></div>
+                </div>
+            </div> 
+
+        </div>
+        
+
+    </div>
+
+    <script src="/wwwlibs/jquery/jquery-1.9.1.min.js"></script>
+    <script src="/wwwlibs/bootstrap-3.0.0/dist/js/bootstrap.min.js"></script>
+    <script>
+            
+    
+        var kw = {
+            proxy: "keywords.php?uri=",
+            codelist: null,
+        
+            drawMenu: function(config){
+                var el;
+                var a = $.ajax({
+                    url: this.proxy, 
+                    dataType: 'json',
+                    success: function(data){
+                        var d = $("#"+config.id);
+                        for(i in data.values){
+                            el = $('<option value="'+data.values[i].id+'" title="'+data.values[i].definition+'">'+data.values[i].label+'</option>');
+                            d.append(el);
+                        }
+                        d.on('change', function(e){;
+                            kw.drawCodelist({
+                                uri: e.target.value,
+                                lang: 'en',
+                                id: 'codelist'  
+                            });
+                        });
+                    }    
+                });
+            } ,   
+
+            		
+            drawCodelist: function(config){
+                var el;
+                var a = $.ajax({
+                    url: this.proxy+encodeURIComponent(config.uri), 
+                    dataType: 'json',
+                    success: function(data){
+                    	codelist = data.codelist;
+                        var d = $("#"+config.id);
+                        d.text('');
+                        for(i in data.values){
+                            el = $('<a href="#" class="list-group-item" data-toggle="tooltip" title="'+data.values[i].definition+'">'+data.values[i].label+'</a>');
+                            el.on('click', {id: data.values[i].id}, function(e){
+                                console.log(e.data.id, codelist);
+                            });
+                            //el.tooltip({delay: 500, placement:'auto'});
+                            d.append(el);
+                        }
+                    }    
+                });
+            }    
+            
+        };
+
+        
+        $(function(){
+            kw.drawMenu({
+                lang: 'en',
+                id: 'sel'  
+            });
+
+        	kw.drawCodelist({
+                uri: 'http://inspire.ec.europa.eu/codelist/ActiveWellTypeValue',
+                lang: 'en',
+                id: 'codelist'  
+            });
+         });   
+
+    </script>
+  </body>
+</html>  

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cswlist>
+  <server name="envicz" title="Envirogrids.cz" link="http://www.envirogrids.cz/php/metadata/csw/index.php" tab="true"/>
+  <server name="envich" title="Envirogrids.ch" link="http://129.194.231.202:8080/geoportal/csw" tab="true"/>
+  <server name="unep" title="UNEP/GRID-Geneva" link="http://geonetwork.grid.unep.ch/geonetwork/srv/en/csw" tab="true"/>
+  <server name="eeasdi" title="EEA SDI" link="http://sdi.eea.europa.eu/catalogue/srv/en/csw" tab="true"/>
+  <server name="geoss" title="GEOSS" link="http://clearinghouse.cisc.gmu.edu/geonetwork/srv/en/csw" tab="true" />
+  <!--<server name="inspire" title="INSPIRE" link="http://www.inspire-geoportal.eu/discovery/csw" tab="true"/>-->
+  <server name="naturnet" title="Naturnet" link="http://www.naturnet.org/metadata/csw/index.php" />
+  <server name="habitats" title="Habitats" link="http://www.inspiredhabitats.cz/metadata/csw/index.php"/>
+  <server name="sdiedu" title="SDI-EDU" link="http://portal.sdi-edu.zcu.cz/metadata/csw/index.php" />
+  <server name="plan4all" title="Plan4all" link="http://www.plan4all.eu/metadata/csw/index.php" />
+</cswlist>

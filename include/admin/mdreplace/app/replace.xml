@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<replaceRules>
+    <rule xpath="//gmd:electronicMailAddress">email (všude)</rule>
+    <rule xpath="gmd:contact/*/gmd:individualName">jméno osoby (metadata)</rule>
+    <rule xpath="gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:individualName">jméno osoby (data)</rule>
+</replaceRules>

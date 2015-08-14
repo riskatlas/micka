@@ -1,0 +1,134 @@
+{* version 20140523 *}
+
+<form action="index.php" METHOD=POST>
+	<input name="ak" type="hidden" value="admin">
+	<input name="adm_ak" type="hidden" value="profils">
+	<input name="profil_ak" type="hidden" value="change_standard">
+	<div class='hlavicka'>Managing profiles:
+		&nbsp;&nbsp;&nbsp;
+		{foreach $adminData['data']['form']['standard'] as $key => $value}
+			<label><input type="radio" name="mds" value="{$key}" {if $key == $adminData['data']['mds']} checked="checked"{/if} />{$value}</label>
+		{/foreach}
+		&nbsp;
+		<input type="submit" value="{$label[179]}">
+	</div>
+</form>
+
+<br>
+
+<h2>Profiles:</h2>
+<table class="sprava">
+  <tr>
+		<th width="30px">ID</th>
+		<th width="30px">Řazení</th>
+		<th>Name</th>
+		<th>Visible</th>
+		<th>Packages</th>
+		<th>Inspire</th>
+		<th>Micka LITE</th>
+		<th><a href="?ak=admin&adm_ak=profils&profil_ak=newp&mds={$adminData['data']['mds']}"><img src='{$themePath}/img/add.png' alt='New'></a></th>
+	</tr>
+
+{foreach $adminData['data']['form']['profil_names'] as $profil_names}
+	<tr class="rowsel">
+		<td align="right">{$profil_names['PROFIL_ID']}</td>
+		<td align="right">{$profil_names['PROFIL_ORDER']}</td>
+		<td>{$profil_names['PROFIL_NAME']}</td>
+		<td>{$profil_names['IS_VIS']}</td>
+		<td>{$profil_names['IS_PACKAGES']}</td>
+		<td>{$profil_names['IS_INSPIRE']}</td>
+		<td>{$profil_names['EDIT_LITE_TEMPLATE']}</td>
+		<td>
+			{if $profil_names['PROFIL_ID'] > 10 && $profil_names['PROFIL_ID'] < 100}
+				<a href="?ak=admin&adm_ak=profils&profil_ak=newp&p={$profil_names['PROFIL_ID']}&mds={$adminData['data']['mds']}">
+					<img src='{$themePath}/img/edit.gif' alt='Edit'>
+				</a>
+				&nbsp;
+				<a onclick="return confirmEraseP();" href="?ak=admin&adm_ak=profils&profil_ak=delp&p={$profil_names['PROFIL_ID']}&mds={$adminData['data']['mds']}">
+					<img src='{$themePath}/img/delete.png' alt='Delete'>
+				</a>
+			{elseif $profil_names['PROFIL_ID'] > 110}
+				<a href="?ak=admin&adm_ak=profils&profil_ak=newp&p={$profil_names['PROFIL_ID']}&mds={$adminData['data']['mds']}">
+					<img src='{$themePath}/img/admin/profils/layout_edit.png' alt='Edit'>
+				</a>
+				&nbsp;
+				<a onclick="return confirmEraseP();" href="?ak=admin&adm_ak=profils&profil_ak=delp&p={$profil_names['PROFIL_ID']}&mds={$adminData['data']['mds']}">
+					<img src='{$themePath}/img/admin/profils/delete.png' alt='Delete'>
+				</a>
+			{else}
+			&nbsp;
+			{/if}
+		</td>
+	</tr>
+{/foreach}
+</table>
+
+<br>
+
+<div style="background: #F5EEE3; padding:3px;">
+
+{foreach $adminData['data']['form']['label_node'] as $LabelNode}
+  /
+  {if $iterator->last}
+		{$LabelNode['label']}
+		{var $q = $LabelNode['md_id']}
+  {else}
+		<a href="?ak=admin&adm_ak=profils&mds={$adminData['data']['mds']}&mdid={$LabelNode['md_id']}">{$LabelNode['label']}</a>
+  {/if}
+{/foreach}
+
+</div>
+
+<table class="sprava" width="100%">
+  <tr>
+	  <th width="10px">ID</th>
+		{foreach $adminData['data']['form']['list_profil'] as $kod => $popis}
+			<th><a href="?ak=admin&adm_ak=profils&profil_ak=listp&mds={$adminData['data']['mds']}&p={$kod}" target="_blank">{$popis}</a></th>
+		{/foreach}
+	  <th>Element</th>
+	  <th>Label</th>
+	  <th>Mandt.</th>
+  </tr>
+{foreach $adminData['data']['form']['list_nodes'] as $ListNodes}
+  <tr class="rowsel">
+	  <td align="right">{$ListNodes['md_id']}</td>
+	  {foreach $adminData['data']['form']['list_profil'] as $kod => $popis}
+	    {var $p=$ListNodes['md_id']}
+	    {ifset $adminData['data']['form']['SelectProfil'][$p][$kod]}
+	      <td>
+					<a href="?ak=admin&adm_ak=profils&profil_ak=delpro&mds={$adminData['data']['mds']}&mdid={$adminData['data']['mdid']}&mdid_ch={$ListNodes['md_id']}&p={$kod}">
+					<img onclick="return confirmErase();" src='{$themePath}/img/on.gif' alt='Delete'></a>
+				</td>
+	    {else}
+	      <td>
+					<a href="?ak=admin&adm_ak=profils&profil_ak=addpro&mds={$adminData['data']['mds']}&mdid={$adminData['data']['mdid']}&mdid_ch={$ListNodes['md_id']}&p={$kod}">
+					<img src='{$themePath}/img/off.gif' alt='Add'></a>
+				</td>
+		  {/ifset}
+	  {/foreach}
+	  <td>
+	  {if ($ListNodes['md_right'] == $ListNodes['md_left']+1)}
+	    {$ListNodes['el_name']}
+	  {else}
+	  	<a href="?ak=admin&adm_ak=profils&mds={$adminData['data']['mds']}&mdid={$ListNodes['md_id']}">{$ListNodes['el_name']}</a>
+		{/if}
+	  </td>
+	  <td>{$ListNodes['label']} </td>
+	  <td> {$ListNodes['mandt_code']} </td>
+	</tr>
+{/foreach}
+</table>
+
+<script type="text/javascript">
+var confirmErase=function(){
+  if(confirm("{!$label[178]} ?")) return true;
+  return false;
+}
+</script>
+
+<script type="text/javascript">
+	var confirmEraseP=function(){
+		if(confirm("Delete profil?")) return true;
+		return false;
+	}
+</script>

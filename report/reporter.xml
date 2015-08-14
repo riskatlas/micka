@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<reporter>
+  <item code="dataThemes" 
+      xpath="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/*[contains(gmd:thesaurusName/*/gmd:title/*,'INSPIRE')]/gmd:keyword/gco:CharacterString" 
+      codeList="" query="subject"
+      >Témata INSPIRE - data</item>
+  
+  <item code="serviceThemes" 
+      xpath="gmd:identificationInfo[../gmd:hierarchyLevel/*/@codeListValue='service']/srv:SV_ServiceIdentification/gmd:descriptiveKeywords/*[contains(gmd:thesaurusName/*/gmd:title/*,'INSPIRE')]/gmd:keyword/gco:CharacterString" 
+      codeList="hierarchyLevel" query="subject"
+      >Témata INSPIRE - služby</item>
+  
+  <item code="serviceThemes19119" 
+      xpath="gmd:identificationInfo[../gmd:hierarchyLevel/*/@codeListValue='service']/srv:SV_ServiceIdentification/gmd:descriptiveKeywords/*[contains(gmd:thesaurusName/*/gmd:title/*,'19119')]/gmd:keyword/gco:CharacterString" 
+      codeList="hierarchyLevel" query="subject"
+      >Témata ISO 19119 - služby</item>
+  
+  <item code="wmcThemes" 
+      xpath="gmd:identificationInfo/srv:SV_ServiceIdentification[srv:serviceType/*='mapContext' or srv:serviceType/*='WMC']/gmd:descriptiveKeywords/*[contains(gmd:thesaurusName/*/gmd:title/*,'INSPIRE')]/gmd:keyword/gco:CharacterString" 
+      codeList="hierarchyLevel" query="subject"
+      >Témata INSPIRE - kompozice</item>
+  
+  <item code="appThemes" 
+      xpath="gmd:identificationInfo[../gmd:hierarchyLevel/*/@codeListValue='application']/srv:SV_ServiceIdentification[srv:serviceType/*!='mapContext' and srv:serviceType/*!='WMC']/gmd:descriptiveKeywords/*[contains(gmd:thesaurusName/*/gmd:title/*,'INSPIRE')]/gmd:keyword/gco:CharacterString" 
+      codeList="hierarchyLevel" query="subject"
+      >Témata INSPIRE - aplikace</item>
+  
+  <item code="providerDataPublic"
+      head="['DATA_TYPE']>0"
+      xpath="gmd:contact/*/gmd:organisationName/gco:CharacterString"
+      codeList="" query="organisationName"
+       >Poskytovatel - veřejné</item>
+  
+  <item code="providerDataPrivate"
+      head="['DATA_TYPE']==0"
+      xpath="gmd:contact/*/gmd:organisationName/gco:CharacterString"
+      codeList="" query="organisationName"
+      >Poskytovatel - neveřejné</item>
+  
+  <item code="servers"
+      xpath="HEAD:SERVER_NAME"
+      codeList="" query="server"
+      >Servery</item>
+
+  <item code="validMetadata"  
+      xpath="HEAD:VALID" 
+      codeList="" 
+      query="subject"
+      >Validní metadata</item>
+
+  <item code="ipINSPIRE"  
+      xpath="gmd:DQ_DataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult[contains(gmd:specification/*/gmd:title/*,'INSPIRE Data')]/*/gmd:pass" 
+      codeList="" 
+      query="subject"
+      >Soulad s IP INSPIRE</item>
+  
+  <item code="harvested" 
+      head="['CREATE_USER']=='harvest'" 
+      xpath="gmd:hierarchyLevel/*/@codeListValue" 
+      codeList="hierarchyLevel" 
+      query="subject"
+      >Harvestováno</item>  
+    
+<!--   <item code="topic" xpath="gmd:identificationInfo/*/gmd:topicCategory/*" codeList="topicCategory" query="topicCategory">Tematická kategorie</item>
+  <item code="type" xpath="gmd:hierarchyLevel/*/@codeListValue" codeList="hierarchyLevel" query="type">Typ zdroje</item>
+  <item code="themesValid" head="['VALID']>0" xpath="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/*[contains(gmd:thesaurusName/*/gmd:title/*,'INSPIRE')]/gmd:keyword/gco:CharacterString" codeList="hierarchyLevel" query="keyword">Témata INSPIRE</item>
+  <item code="serviceThemes" xpath="gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:descriptiveKeywords/*[contains(gmd:thesaurusName/*/gmd:title/*,'19119')]/gmd:keyword/gco:CharacterString" codeList="hierarchyLevel" query="keyword">Klasifikace služby</item>
+  <item code="serviceThemesValid" head="['VALID']>0" xpath="gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:descriptiveKeywords/*[contains(gmd:thesaurusName/*/gmd:title/*,'INSPIRE')]/gmd:keyword/gco:CharacterString" codeList="hierarchyLevel" query="keyword">Klasifikace služby</item>
+  <item code="serviceType" xpath="gmd:identificationInfo/*/srv:serviceType/*" codeList="hierarchyLevel" query="serviceType">Typ služby</item>
+  <item code="provider" xpath="gmd:contact/*/gmd:organisationName/gco:CharacterString" codeList="" query="organisationName">Poskytovatel</item>
+ -->
+ 
+</reporter>

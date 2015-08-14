@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <META HTTP-EQUIV="Content-Type" CONTENT="text/html;charset=UTF-8">
+  <title>GEMET</title>
+  <link rel="stylesheet" type="text/css" href="http://www.bnhelp.cz/wwwlibs/ext/3.1.1/resources/css/ext-all.css" />
+  <link rel="stylesheet" type="text/css" href="http://www.bnhelp.cz/wwwlibs/ext/3.1.1/resources/css/xtheme-gray.css" />
+  <script type="text/javascript" src="http://www.bnhelp.cz/wwwlibs/ext/3.1.1/adapter/ext/ext-base.js"></script>
+  <script type="text/javascript" src="http://www.bnhelp.cz/wwwlibs/ext/3.1.1/ext-all.js"></script>
+  <script type="text/javascript" src="thesaurus/HS.js"></script>  
+  <script type="text/javascript" src="thesaurus/thesaur.js"></script>      
+  <script type="text/javascript" src="thesaurus/translations.js"></script>      
+  <script type="text/javascript" src="thesaurus/InspireServiceReader.js"></script>      
+  <style>
+  	.thes-term {color:#C00000; font-weight: bold; margin:4px; font-size:15px; text-align:center}
+  	.thes-description div div {font-family: arial,tahoma; font-size:11px; padding:4px; color:#505050}
+  	.thes-link a span {color:#0040D0}
+  </style>
+
+<script type="text/javascript">
+window.focus();
+Ext.BLANK_IMAGE_URL = 'http://www.bnhelp.cz/wwwlibs/ext/2.0/resources/images/default/s.gif';
+
+  var getURLParams = function(){
+     var params = window.location.href;
+     var result = {};
+     if(params.indexOf("?") > -1 ){
+       params = params.substr(params.indexOf("?")+1).toLowerCase();
+       params = params.split("&");
+       for(var i=0;i<params.length;i++){
+         var pom = params[i].split("=");
+         result[pom[0]] = pom[1];
+       }
+     }
+     return result;
+  }
+
+var params = getURLParams();
+HS.setLang(HS.getLastLangCode());
+
+var processResult = function(data){
+  var terms = [];
+  for(var l in data.terms) terms[HS.getCodeFromLanguage(l)] = data.terms[l];
+  data.terms = terms;
+  opener.focus();
+  opener.fromThesaurus(data);
+  close();
+}
+
+Ext.onReady(function(){
+  if(opener){
+      if(opener.langs){
+        if(opener.langs.indexOf("|")>-1) var langs = opener.langs.split("|");
+        else langs = [opener.langs];
+      }
+      else langs = [opener.lang];
+  }
+  else {
+    langs = [params.lang];
+  } 
+  var langs2 = [];
+  for(var i=0;i<langs.length;i++) langs2.push(HS.getCodeFromLanguage(langs[i],2));
+  var noServices = (params.services=='true') ? false : true;
+ 
+  var gemet = new ThesaurusReader({
+  	  appPath: 'thesaurus/',
+      lang: HS.getLang(2),
+      outputLangs: langs2, 
+      separator: '/',
+      returnPath: (params.path=='true'),
+      defaultThesaurus: 'INSPIRE',
+      thesaurus: {
+        'INSPIRE': {
+          url:        "http://gemet.esdi-humboldt.cz/thesaurus/",
+          concept:    "http://inspire.jrc.it/theme/",
+          theme:      "http://inspire.jrc.it/theme/",  
+          firstClick: true,      
+          group:   	  null,
+          supergroup: null
+        },
+        'GEMET': {}    
+      },   
+      handler: processResult
+  });
+  
+  var services = new InspireServiceReader({
+  	lang: HS.getLang(2),
+  	outputLangs: langs2, 
+  	handler: processResult,
+  	serviceUrl: 'thesaurus/'
+  }); 
+
+  var keywordManager = new Ext.TabPanel({
+    height: 500, width:400,
+    activeTab: 0,
+    items: [
+      {id:'gemet', title: 'GEMET', items: [gemet], layout: 'fit'},
+      {id:'services', title: HS.i18n('InspireServices'), items: [services], layout: 'fit', disabled: noServices}
+    ]
+  }) 
+  keywordManager.render('thesDiv');
+  b = keywordManager.getItem('gemet');
+  b.doLayout(); 
+  Ext.QuickTips.init(); 
+});
+  
+
+
+  
+</script>
+</head>
+<body>
+<div id='thesDiv'></div>
+
+</body>
+</html>
+

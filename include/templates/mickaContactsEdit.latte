@@ -1,0 +1,69 @@
+{********************************************************************************
+	ver. 20131105
+ *******************************************************************************}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Metadata - {$label[135]}</title>
+	<link rel="shortcut icon" href="{$themePath}/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="{$themePath}/micka.css">
+  <script type="text/javascript" src="scripts/micka.js"></script>
+  <script type="text/javascript">
+		function md_delkont(id) {
+      if(confirm('{$label[169]}?')) this.location=("?ak=md_contacts&action=delete&id="+id);
+		}
+  </script>
+</head>
+<body>
+
+
+<h2>{$label[135]} - {$label[118]}</h2>
+<br>
+<form action="index.php" METHOD=POST>
+	<input type="hidden" name="ak" value="md_contacts">
+	<input type="hidden" name="action" value="save">
+	<input type="hidden" name="cont_id" value="{$contacts['data'][0]['CONT_ID']}">
+	<fieldset class="contacts">
+		<div><label><font color="green">{$label[137]}</font></label><input type=text name="pers" value="{$contacts['data'][0]['CONT_PERSON']}" size="40" maxlength="60"></div>
+		<div><label><font color="green">{$label[138]}</font></label><input type=text name="organisation" value="{$contacts['data'][0]['CONT_ORGANISATION']}" size="60" maxlength="120"></div>
+		<div><label><font color="green">{$label[138]} EN</font></label><input type=text name="organ_en" value="{$contacts['data'][0]['CONT_ORGAN_EN']}" size="60" maxlength="120"></div>
+		<div><label><font color="red">{$label[149]}</font></label><input type=text name="label" value="{$contacts['data'][0]['CONT_LABEL']}" size="60" maxlength="120" onFocus="fillLabel(this);"></div>
+		<div><label>{$label[139]}</label><input type=text name="func" value="{$contacts['data'][0]['CONT_FUNCTION']}" size="40" maxlength="70"></div>
+		<div><label>{$label[139]} EN</label><input type=text name="func_en" value="{$contacts['data'][0]['CONT_FUNCTION_EN']}" size="40" maxlength="70"></div>
+		<div><label>{$label[140]}</label><input type=text name="phone" value="{$contacts['data'][0]['CONT_PHONE']}" size="40" maxlength="20"></div>
+		<div><label>{$label[141]}</label><input type=text name="fax" value="{$contacts['data'][0]['CONT_FAX']}" size="40" maxlength="20"></div>
+		<div><label>{$label[142]}</label><input type=text name="point" value="{$contacts['data'][0]['CONT_POINT']}" size="40"></div>
+		<div><label>{$label[143]}</label><input type=text name="city" value="{$contacts['data'][0]['CONT_CITY']}" size="40"></div>
+		<div><label>{$label[144]}</label><input type=text name="adminarea" value="{$contacts['data'][0]['CONT_ADMINAREA']}" size="40"></div>
+		<div><label>{$label[145]}</label><input type=text name="postcode" value="{$contacts['data'][0]['CONT_POSTCODE']}" size="40" maxlength="10"></div>
+		<div><label>{$label[146]}</label><input type=text name="country" value="{$contacts['data'][0]['CONT_COUNTRY']}" size="40" maxlength="25"></div>
+		<div><label>{$label[147]}</label><input type=text name="email" value="{$contacts['data'][0]['CONT_EMAIL']}" size="40" maxlength="50"></div>
+		<div><label>{$label[148]}</label><input type=text name="url" value="{$contacts['data'][0]['CONT_URL']}" size="40"></div>
+		<div><label style="width:200px;">{$label[151]}</label>
+			<select name="groups_e" class="find">
+				{foreach $contacts['groups'] as $key => $value}
+					<option label="{$value}" value="{$key}" {if $key == $contacts['data'][0]['CONT_GROUP_EDIT']}selected="selected"{/if}>{$value}</option>
+				{/foreach}
+			</select></div>
+			
+		<div><label style="width:200px;">{$label[154]}</label>
+			<select name="groups_v" class="find">
+				{foreach $contacts['groups'] as $key => $value}
+					<option label="{$value}" value="{$key}" {if $key == $contacts['data'][0]['CONT_GROUP_VIEW']}selected="selected"{/if}>{$value}</option>
+				{/foreach}
+			</select></div>
+			
+	</fieldset>
+	<p align="center">
+		<input type=submit value="{$label[6]}">
+		<input type=reset value="{$label[7]}">
+		<input type=button onClick="window.location.href='?ak=md_contacts'" value="{$label[12]}">
+		{if $contacts['data'][0]['CONT_ID'] > 0}
+			<input type=button onClick="javascript:md_delkont({$contacts['data'][0]['CONT_ID']})" value="{$label[169]}">
+		{/if}
+	</p>
+</form>
+
+</body>
+</html>
